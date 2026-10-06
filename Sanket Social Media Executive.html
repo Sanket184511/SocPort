@@ -1,0 +1,1162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Sanket Jadhav — Social Media Executive</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #fafafa;
+        --fg: #171717;
+        --muted: #666;
+        --border: #e5e5e5;
+        --raised: #fff;
+        --chip: #f1f1f3;
+        --primary: #1a1a1a;
+        --on-primary: #fff;
+        --accent: #e1306c;
+        --accent-soft: #fde4ee;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #111113;
+          --fg: #f2f2f3;
+          --muted: #a1a1aa;
+          --border: #2a2a2e;
+          --raised: #1b1b1f;
+          --chip: #26262b;
+          --primary: #f2f2f3;
+          --on-primary: #111113;
+          --accent: #ff6b9b;
+          --accent-soft: #3a1626;
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #111113;
+        --fg: #f2f2f3;
+        --muted: #a1a1aa;
+        --border: #2a2a2e;
+        --raised: #1b1b1f;
+        --chip: #26262b;
+        --primary: #f2f2f3;
+        --on-primary: #111113;
+        --accent: #ff6b9b;
+        --accent-soft: #3a1626;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 80px);
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        padding: 16px 20px 96px;
+        transition:
+          background-color 0.3s,
+          color 0.3s;
+      }
+      a {
+        color: inherit;
+      }
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+        border-radius: 999px;
+      }
+      .spring {
+        transition:
+          transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+          opacity 0.25s ease,
+          width 0.5s cubic-bezier(0.34, 1.4, 0.64, 1),
+          height 0.5s cubic-bezier(0.34, 1.4, 0.64, 1),
+          left 0.5s cubic-bezier(0.34, 1.4, 0.64, 1),
+          background-color 0.3s,
+          color 0.3s,
+          border-color 0.3s;
+      }
+      header {
+        position: sticky;
+        top: calc(env(safe-area-inset-top, 0px) + 12px);
+        z-index: 30;
+        display: flex;
+        justify-content: center;
+      }
+      .pill {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 6px 6px 6px 8px;
+        border-radius: 999px;
+        background: var(--raised);
+        border: 1px solid var(--border);
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+      }
+      .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .pill .who {
+        display: flex;
+        flex-direction: column;
+        padding-right: 6px;
+        line-height: 1.25;
+      }
+      .pill .who b {
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .pill .who span {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .ibtn {
+        width: 44px;
+        height: 44px;
+        border-radius: 999px;
+        border: 0;
+        background: transparent;
+        color: var(--fg);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .ibtn.chip {
+        background: var(--chip);
+      }
+      nav {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        width: 220px;
+        padding: 6px;
+        border-radius: 18px;
+        background: var(--raised);
+        border: 1px solid var(--border);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+        transform-origin: top right;
+        transform: scale(0.85);
+        opacity: 0;
+        visibility: hidden;
+      }
+      nav.open {
+        transform: scale(1);
+        opacity: 1;
+        visibility: visible;
+      }
+      nav a {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 12px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-size: 14px;
+      }
+      nav a:hover,
+      nav a:focus-visible {
+        background: rgba(127, 127, 127, 0.12);
+      }
+      main {
+        max-width: 600px;
+        margin: 0 auto;
+        padding-top: 88px;
+        display: flex;
+        flex-direction: column;
+        gap: 72px;
+      }
+      section {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      h1,
+      .serif {
+        font-family: "Instrument Serif", Georgia, serif;
+        font-style: italic;
+        font-weight: 400;
+      }
+      h1 {
+        font-size: 44px;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+      }
+      h2 {
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .sub {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      strong {
+        font-weight: 600;
+        color: var(--fg);
+      }
+      .peek {
+        position: relative;
+        margin-top: 8px;
+      }
+      .preview {
+        position: absolute;
+        bottom: calc(100% + 14px);
+        transform: translateX(-50%) scale(0.6) translateY(10px);
+        transform-origin: bottom center;
+        opacity: 0;
+        border-radius: 20px;
+        background: var(--raised);
+        border: 1px solid var(--border);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 10;
+        width: 120px;
+        height: 60px;
+      }
+      .preview.show {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+      }
+      .pv {
+        padding: 14px;
+        display: flex;
+        gap: 12px;
+        height: 100%;
+      }
+      .pv .art {
+        width: 56px;
+        flex-shrink: 0;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .pv .t {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        min-width: 0;
+      }
+      .pv .t small {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .pv .t b {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.3;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+      }
+      .soc {
+        width: 44px;
+        height: 44px;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--raised);
+        color: var(--fg);
+        border: 1px solid var(--border);
+        transition:
+          transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+          background-color 0.2s,
+          color 0.2s;
+      }
+      .soc:hover,
+      .soc:focus-visible {
+        transform: translateY(-3px) scale(1.06);
+        color: #fff;
+      }
+      .soc[data-k="ig"]:hover,
+      .soc[data-k="ig"]:focus-visible {
+        background: #d6249f;
+      }
+      .soc[data-k="yt"]:hover,
+      .soc[data-k="yt"]:focus-visible {
+        background: #e11d1d;
+      }
+      .soc[data-k="in"]:hover,
+      .soc[data-k="in"]:focus-visible {
+        background: #0a66c2;
+      }
+      .soc[data-k="mail"]:hover,
+      .soc[data-k="mail"]:focus-visible {
+        background: var(--accent);
+      }
+      .wave {
+        width: 100%;
+        height: 12px;
+        display: block;
+      }
+      .growth {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        padding: 22px;
+        border-radius: 24px;
+        background: var(--raised);
+        border: 1px solid var(--border);
+      }
+      .growth .bar {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .growth .lbl {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+      }
+      .growth .lbl span {
+        color: var(--muted);
+      }
+      .track {
+        height: 14px;
+        border-radius: 999px;
+        background: var(--chip);
+        overflow: hidden;
+      }
+      .fill {
+        height: 100%;
+        border-radius: 999px;
+        background: var(--accent);
+        width: 0;
+        transition: width 1.2s cubic-bezier(0.34, 1.2, 0.64, 1);
+      }
+      .fill.soft {
+        background: var(--accent-soft);
+        box-shadow: inset 0 0 0 1px var(--accent);
+      }
+      ol {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      ol li {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      ol li .m {
+        color: var(--muted);
+        font-size: 14px;
+        text-align: right;
+      }
+      .bento {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+      }
+      @media (min-width: 640px) {
+        .bento {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .bento .wide {
+          grid-column: span 2;
+        }
+      }
+      .proj {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        padding: 22px;
+        border-radius: 24px;
+        background: var(--raised);
+        border: 1px solid var(--border);
+        text-decoration: none;
+        overflow: hidden;
+        transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .proj.wide {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 168px;
+      }
+      .proj:hover,
+      .proj:focus-visible {
+        transform: translateY(-4px);
+      }
+      .proj .art {
+        transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        flex-shrink: 0;
+      }
+      .proj:hover .art,
+      .proj:focus-visible .art {
+        transform: translateY(-8px) rotate(-6deg) scale(1.06);
+      }
+      .proj .body {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .proj .body b {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .proj .body span {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .proj.wide .body {
+        max-width: 62%;
+      }
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 4px;
+      }
+      .tags i {
+        font-style: normal;
+        font-size: 12px;
+        padding: 2px 10px;
+        border-radius: 999px;
+        background: var(--chip);
+        color: var(--muted);
+      }
+      .stack {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+      @media (min-width: 560px) {
+        .stack {
+          grid-template-columns: repeat(6, minmax(0, 1fr));
+        }
+      }
+      .tile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        padding: 12px 4px;
+        border-radius: 16px;
+        filter: grayscale(1);
+        opacity: 0.78;
+        transition:
+          transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+          filter 0.3s,
+          opacity 0.3s;
+      }
+      .tile:hover {
+        filter: none;
+        opacity: 1;
+        transform: scale(1.08);
+      }
+      .tile .ic {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 15px;
+        box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.18);
+      }
+      .tile span.n {
+        font-size: 12px;
+        color: var(--muted);
+        text-align: center;
+      }
+      .cta {
+        min-height: 44px;
+        padding: 0 20px;
+        border-radius: 999px;
+        border: 0;
+        background: var(--primary);
+        color: var(--on-primary);
+        font:
+          500 14px "Geist",
+          sans-serif;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .cta.alt {
+        background: var(--chip);
+        color: var(--fg);
+        text-decoration: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+          animation: none !important;
+          scroll-behavior: auto !important;
+        }
+        .proj:hover .art,
+        .tile:hover,
+        .soc:hover {
+          transform: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div style="position: relative">
+        <div class="pill">
+          <div class="avatar" aria-hidden="true">SJ</div>
+          <div class="who">
+            <b>Sanket Jadhav</b><span>Social media executive</span>
+          </div>
+          <button
+            class="ibtn spring"
+            id="theme"
+            type="button"
+            aria-label="Switch theme"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+            </svg>
+          </button>
+          <button
+            class="ibtn chip"
+            id="menubtn"
+            type="button"
+            aria-expanded="false"
+            aria-controls="sitemenu"
+            aria-label="Open site menu"
+          >
+            <svg
+              class="spring"
+              id="plus"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </button>
+        </div>
+        <nav id="sitemenu" class="spring" aria-label="Sections">
+          <a href="#about">About</a><a href="#growth">Growth</a
+          ><a href="#work">Content</a><a href="#skills">Skills</a
+          ><a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="about" aria-labelledby="name">
+        <h1 id="name">Sanket Jadhav</h1>
+        <p class="muted">
+          I'm a <strong>social media executive</strong> who grows pages by
+          teaching. I took my Instagram page
+          <strong>@dev_aur_code past 4,000 followers in under a month</strong>
+          with daily posting, no trend-chasing and no heavy editing.
+        </p>
+        <p class="muted">
+          I plan, script, design and publish short-form content, track what
+          holds attention, and keep a steady posting rhythm. I'm also a Computer
+          Science engineer, so I can explain complex topics simply and build the
+          pages and tools a campaign needs.
+        </p>
+        <div class="peek" id="peek">
+          <div class="preview spring" id="preview" aria-hidden="true"></div>
+          <div class="row">
+            <a
+              class="soc"
+              data-k="ig"
+              href="https://www.instagram.com/dev_aur_code/"
+              aria-label="Instagram: dev_aur_code"
+              target="_blank"
+              rel="noopener"
+              ><svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r=".6" /></svg
+            ></a>
+            <a
+              class="soc"
+              data-k="yt"
+              href="https://www.youtube.com/@sanket11527"
+              aria-label="YouTube"
+              target="_blank"
+              rel="noopener"
+              ><svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="2.5" y="5" width="19" height="14" rx="4" />
+                <path d="M10 9.5v5l4.5-2.5z" /></svg
+            ></a>
+            <a
+              class="soc"
+              data-k="in"
+              href="https://www.linkedin.com/in/sanket-jadhav-a1b550329/"
+              aria-label="LinkedIn"
+              target="_blank"
+              rel="noopener"
+              ><svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" /></svg
+            ></a>
+            <a
+              class="soc"
+              data-k="mail"
+              href="mailto:sj18451845@gmail.com"
+              aria-label="Email"
+              ><svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="M3 7l9 6 9-6" /></svg
+            ></a>
+            <span class="muted" style="font-size: 14px; margin-left: 6px"
+              >Hover or tab to peek</span
+            >
+          </div>
+        </div>
+      </section>
+
+      <svg
+        class="wave"
+        aria-hidden="true"
+        viewBox="0 0 600 12"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M0 6 Q 15 0 30 6 T 60 6 T 90 6 T 120 6 T 150 6 T 180 6 T 210 6 T 240 6 T 270 6 T 300 6 T 330 6 T 360 6 T 390 6 T 420 6 T 450 6 T 480 6 T 510 6 T 540 6 T 570 6 T 600 6"
+          fill="none"
+          stroke="var(--border)"
+          stroke-width="1.5"
+        />
+      </svg>
+
+      <section id="growth" aria-labelledby="gt">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <h2 id="gt">Growth on @dev_aur_code</h2>
+          <p class="sub">
+            Organic growth from daily explainer reels. No paid promotion, no
+            giveaways.
+          </p>
+        </div>
+        <div class="growth" id="gbox">
+          <div class="bar">
+            <div class="lbl">
+              <strong>Day 15</strong><span>1.3K followers</span>
+            </div>
+            <div class="track"><div class="fill soft" data-w="33"></div></div>
+          </div>
+          <div class="bar">
+            <div class="lbl">
+              <strong>Under 30 days</strong><span>4,000+ followers</span>
+            </div>
+            <div class="track"><div class="fill" data-w="100"></div></div>
+          </div>
+          <p class="sub">
+            66 posts published, all handwritten-notes explainers.
+          </p>
+        </div>
+      </section>
+
+      <section id="work" aria-labelledby="worktitle">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <h2 id="worktitle">Content I run</h2>
+          <p class="sub">
+            Two channels, one idea: explain things clearly and show up every
+            day.
+          </p>
+        </div>
+        <div class="bento">
+          <a
+            class="proj wide"
+            href="https://www.instagram.com/dev_aur_code/"
+            target="_blank"
+            rel="noopener"
+          >
+            <span class="body"
+              ><b>@dev_aur_code on Instagram</b
+              ><span
+                >A faceless page that teaches coding and CS through
+                handwritten-notes reels: the OSI model, IP, CORS, payment
+                gateways, ACID and more. Value first, one clear idea per
+                post.</span
+              ><span class="tags"
+                ><i>Reels</i><i>Educational content</i
+                ><i>Daily posting</i></span
+              ></span
+            >
+            <svg
+              class="art"
+              aria-hidden="true"
+              width="110"
+              height="110"
+              viewBox="0 0 120 120"
+            >
+              <rect
+                x="16"
+                y="16"
+                width="88"
+                height="88"
+                rx="26"
+                fill="#e1306c"
+              />
+              <rect
+                x="16"
+                y="16"
+                width="88"
+                height="88"
+                rx="26"
+                fill="url(#g1)"
+              />
+              <circle
+                cx="60"
+                cy="60"
+                r="21"
+                fill="none"
+                stroke="#fff"
+                stroke-width="7"
+              />
+              <circle cx="86" cy="34" r="5" fill="#fff" />
+              <defs>
+                <linearGradient id="g1" x1="0" y1="1" x2="1" y2="0">
+                  <stop offset="0" stop-color="#ffb800" stop-opacity=".9" />
+                  <stop offset=".5" stop-color="#e1306c" stop-opacity="0" />
+                  <stop offset="1" stop-color="#6a3de8" stop-opacity=".8" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </a>
+          <a
+            class="proj"
+            href="https://www.youtube.com/@sanket11527"
+            target="_blank"
+            rel="noopener"
+          >
+            <svg
+              class="art"
+              aria-hidden="true"
+              width="72"
+              height="72"
+              viewBox="0 0 84 84"
+            >
+              <rect
+                x="8"
+                y="16"
+                width="68"
+                height="50"
+                rx="14"
+                fill="#e11d1d"
+              />
+              <path d="M35 30v22l20-11z" fill="#fff" />
+            </svg>
+            <span class="body"
+              ><b>YouTube journey</b
+              ><span
+                >A documentary-style channel on my bootcamp at Sheryians Coding
+                School: the move from Mumbai to Bhopal, a startup pitch and a
+                hackathon. 55 videos so far.</span
+              ><span class="tags"
+                ><i>Long-form</i><i>Storytelling</i></span
+              ></span
+            >
+          </a>
+          <a class="proj" href="#growth">
+            <svg
+              class="art"
+              aria-hidden="true"
+              width="72"
+              height="72"
+              viewBox="0 0 84 84"
+            >
+              <rect
+                x="14"
+                y="12"
+                width="56"
+                height="56"
+                rx="14"
+                fill="#4f46e5"
+              />
+              <path
+                d="M26 54l12-12 8 8 14-18"
+                fill="none"
+                stroke="#fff"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span class="body"
+              ><b>My approach</b
+              ><span
+                >Teach one thing per post, post every day and skip trends. It is
+                also how I got from 0 to 1.3K in 15 days.</span
+              ><span class="tags"
+                ><i>Consistency</i><i>Content strategy</i></span
+              ></span
+            >
+          </a>
+        </div>
+      </section>
+
+      <section id="skills" aria-labelledby="st">
+        <h2 id="st">What I do</h2>
+        <ol>
+          <li>
+            <span
+              ><strong>Content strategy</strong
+              ><span class="muted">
+                · topics, series and a daily posting rhythm</span
+              ></span
+            >
+          </li>
+          <li>
+            <span
+              ><strong>Short-form video</strong
+              ><span class="muted">
+                · Reels from idea and script to publishing</span
+              ></span
+            >
+          </li>
+          <li>
+            <span
+              ><strong>Hooks and scripting</strong
+              ><span class="muted">
+                · opening lines that earn the next five seconds</span
+              ></span
+            >
+          </li>
+          <li>
+            <span
+              ><strong>Audience growth</strong
+              ><span class="muted">
+                · organic reach, followers and what drives them</span
+              ></span
+            >
+          </li>
+          <li>
+            <span
+              ><strong>Storytelling</strong
+              ><span class="muted">
+                · documentary-style vlogs on YouTube</span
+              ></span
+            >
+          </li>
+          <li>
+            <span
+              ><strong>Community and brand voice</strong
+              ><span class="muted">
+                · a clear, consistent tone across platforms</span
+              ></span
+            >
+          </li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="tt">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <h2 id="tt">Tools and technical edge</h2>
+          <p class="sub">
+            B.Tech in Computer Science and Engineering (2022 – 2026). I can
+            build landing pages, link-in-bio pages and small tools myself.
+          </p>
+        </div>
+        <ul class="stack" id="tools"></ul>
+      </section>
+
+      <section id="contact" aria-labelledby="ct">
+        <h2 class="serif" id="ct" style="font-size: 32px; line-height: 1.15">
+          Hiring a social media executive?
+        </h2>
+        <p class="muted">
+          I'd like to grow a brand's pages the way I grew mine: clear content,
+          posted consistently. Send me the details, or look at the page first.
+        </p>
+        <div class="row">
+          <button class="cta spring" id="copy" type="button">
+            <svg
+              aria-hidden="true"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="9" y="9" width="12" height="12" rx="2" />
+              <path d="M5 15V5a2 2 0 0 1 2-2h10" /></svg
+            ><span id="copylabel" aria-live="polite">Copy my email</span>
+          </button>
+          <a
+            class="cta alt"
+            href="https://www.instagram.com/dev_aur_code/"
+            target="_blank"
+            rel="noopener"
+            >View my Instagram</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <script>
+      (function () {
+        var tools = [
+          ["Instagram", "Ig", "#d6249f"],
+          ["YouTube", "Yt", "#e11d1d"],
+          ["Canva", "Ca", "#7d2ae8"],
+          ["JavaScript", "JS", "#f7df1e", "#1a1a1a"],
+          ["React", "Re", "#0a7ea4"],
+          ["HTML and CSS", "H5", "#e34f26"],
+        ];
+        document.getElementById("tools").innerHTML = tools
+          .map(function (t) {
+            return (
+              '<li><div class="tile" title="' +
+              t[0] +
+              '"><span class="ic" aria-hidden="true" style="background:' +
+              t[2] +
+              ";color:" +
+              (t[3] || "#fff") +
+              '">' +
+              t[1] +
+              '</span><span class="n">' +
+              t[0] +
+              "</span></div></li>"
+            );
+          })
+          .join("");
+
+        var root = document.documentElement,
+          tb = document.getElementById("theme");
+        function dark() {
+          var a = root.getAttribute("data-theme");
+          return a
+            ? a === "dark"
+            : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        }
+        tb.addEventListener("click", function () {
+          root.setAttribute("data-theme", dark() ? "light" : "dark");
+        });
+
+        var mb = document.getElementById("menubtn"),
+          nav = document.getElementById("sitemenu"),
+          plus = document.getElementById("plus");
+        function menu(o) {
+          nav.classList.toggle("open", o);
+          mb.setAttribute("aria-expanded", o);
+          plus.style.transform = o ? "rotate(45deg)" : "none";
+        }
+        mb.addEventListener("click", function () {
+          menu(!nav.classList.contains("open"));
+        });
+        nav.addEventListener("click", function (e) {
+          if (e.target.tagName === "A") menu(false);
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") menu(false);
+        });
+
+        var fills = document.querySelectorAll(".fill");
+        function grow() {
+          fills.forEach(function (f) {
+            f.style.width = f.getAttribute("data-w") + "%";
+          });
+        }
+        if ("IntersectionObserver" in window) {
+          var io = new IntersectionObserver(
+            function (es) {
+              es.forEach(function (e) {
+                if (e.isIntersecting) {
+                  grow();
+                  io.disconnect();
+                }
+              });
+            },
+            { threshold: 0.4 },
+          );
+          io.observe(document.getElementById("gbox"));
+        } else {
+          grow();
+        }
+
+        var P = {
+          ig: {
+            w: 310,
+            h: 104,
+            c: "#d6249f",
+            i: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg>',
+            s: "Instagram · @dev_aur_code",
+            t: "4,000+ followers in under a month",
+            m: "Handwritten-notes explainer reels",
+          },
+          yt: {
+            w: 300,
+            h: 104,
+            c: "#e11d1d",
+            i: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9.5v5l4.5-2.5z"/></svg>',
+            s: "YouTube · @sanket11527",
+            t: "Documentary-style bootcamp journey",
+            m: "55 videos",
+          },
+          in: {
+            w: 290,
+            h: 104,
+            c: "#0a66c2",
+            i: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
+            s: "LinkedIn",
+            t: "Sanket Jadhav",
+            m: "Mumbai, India",
+          },
+          mail: {
+            w: 280,
+            h: 104,
+            c: "#e1306c",
+            i: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>',
+            s: "Email",
+            t: "sj18451845@gmail.com",
+            m: "Open to social media roles",
+          },
+        };
+        var pv = document.getElementById("preview"),
+          peek = document.getElementById("peek");
+        function show(el) {
+          var k = el.getAttribute("data-k"),
+            d = P[k],
+            pr = peek.getBoundingClientRect(),
+            er = el.getBoundingClientRect();
+          pv.innerHTML =
+            '<div class="pv"><div class="art" style="background:' +
+            d.c +
+            '">' +
+            d.i +
+            '</div><div class="t"><small>' +
+            d.s +
+            "</small><b>" +
+            d.t +
+            "</b><small>" +
+            d.m +
+            "</small></div></div>";
+          var w = Math.min(d.w, pr.width),
+            c = er.left - pr.left + 22;
+          pv.style.width = w + "px";
+          pv.style.height = d.h + "px";
+          pv.style.left = Math.max(w / 2, Math.min(c, pr.width - w / 2)) + "px";
+          pv.classList.add("show");
+        }
+        function hide() {
+          pv.classList.remove("show");
+        }
+        document.querySelectorAll(".soc").forEach(function (a) {
+          a.addEventListener("mouseenter", function () {
+            show(a);
+          });
+          a.addEventListener("focus", function () {
+            show(a);
+          });
+          a.addEventListener("blur", hide);
+        });
+        peek.addEventListener("mouseleave", hide);
+
+        var cp = document.getElementById("copy"),
+          cl = document.getElementById("copylabel"),
+          t;
+        cp.addEventListener("click", function () {
+          var ok = false;
+          try {
+            if (navigator.clipboard) {
+              navigator.clipboard.writeText("sj18451845@gmail.com");
+              ok = true;
+            }
+          } catch (e) {}
+          cl.textContent = ok ? "Copied to clipboard" : "sj18451845@gmail.com";
+          cp.style.transform = "scale(1.04)";
+          clearTimeout(t);
+          t = setTimeout(function () {
+            cl.textContent = "Copy my email";
+            cp.style.transform = "scale(1)";
+          }, 1800);
+        });
+      })();
+    </script>
+  </body>
+</html>
